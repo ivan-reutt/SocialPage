@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Layout } from 'antd';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-function App() {
+import HeaderContainer from 'components/Header/container';
+import store from 'redux/store';
+import FriendsContainer from 'components/FriendsList/container';
+import UserInfoContainer from 'components/UserInfo/container';
+import ConnectionContainer from 'components/Connection/container';
+
+import GlobalStyles from './GlobalStyles';
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <GlobalStyles />
+      <BrowserRouter>
+        <Layout>
+          <HeaderContainer />
+          <Switch>
+            <Route exact path="/" component={ConnectionContainer} />
+            <Route path="/user" component={UserInfoContainer} />
+            <Route path="/friends" component={FriendsContainer} />
+          </Switch>
+        </Layout>
+      </BrowserRouter>
+    </Provider>
   );
-}
+};
 
 export default App;
